@@ -1,19 +1,19 @@
-# coprocessor-vm-sdk
+# Pico-zkCoprocessor
 
-PICO-VM based coprocessor SDK.
+Pico-zkCoprocessor provides efficient and secure access to historical blockchain data, these coprocessors enables developers to retrieve and analyze past transaction records, state data, and other on-chain information with confidence.
 
 ## Quick start ##
 
 1. Import pico-sdk with coprocessor
 
 ```
-pico-sdk = { git = "https://github.com/brevis-network/brevis-vm.git", features = ["coprocessor"]}
+pico-sdk = { git = "https://github.com/brevis-network/pico", features = ["coprocessor"]}
 ```
 Enable feature "coprocessor" to apply coprocessor plugin in pico-sdk
 
 - Add PICO Coprocessor SDK dependency
 ```
-coprocessor-sdk = { git = "https://github.com/brevis-network/coprocessor-vm-sdk.git"}
+coprocessor-sdk = { git = "https://github.com/brevis-network/Pico-zkCoprocessor"}
 ```
 
 2. SDK Initialize
@@ -52,13 +52,18 @@ pico_sdk::io::commit_coprocessor_value(&mut sdk, &value);
 
 ## Build and prove example program ##
 
-Build program
+1. Read [Pico README](https://github.com/brevis-network/pico/blob/main/README.md) to install Pico CLI.
+
+2. Build program
 ```shell
-cd example
+cd trading-volumn/app
 RUST_LOG=info cargo pico build
 ```
-
-Prove
+3. debug prove 
 ```shell
 RUST_LOG=info cargo pico prove --fast
+```
+4. bench mark
+```shell
+RUST_LOG=info cargo pico prove
 ```
