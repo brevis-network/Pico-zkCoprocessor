@@ -1,0 +1,70 @@
+syntax = "proto3";
+package brevis;
+
+import "types.proto";
+import "common/circuit_data.proto";
+import "google/api/annotations.proto";
+
+service Gateway {
+    rpc SendBatchQueriesAsync(SendBatchQueriesRequest) returns (SendBatchQueriesAsyncResponse) {
+        option (google.api.http) = {
+            post: "/zk/sendBatchQueriesAsync"
+            body: "*"
+        };
+    }
+
+    rpc GetCircuitDigest(CircuitDigestRequest) returns (CircuitDigestResponse) {
+        option (google.api.http) = {
+            get: "/zk/getCircuitDigest"
+        };
+    }
+}
+
+message SendBatchQueriesRequest {
+    uint64 chain_id = 1;
+    repeated Query queries = 2;
+    uint64 target_chain_id = 3;
+    QueryOption option = 4;
+    string api_key = 5; // authentication
+    bool use_vm = 6;
+}
+
+message Query {
+    repeated ReceiptInfo receipt_infos = 1;
+    repeated StorageQueryInfo storage_query_infos = 2;
+    repeated TransactionInfo transaction_infos = 3;
+    brevis.AppCircuitInfoWithProof app_circuit_info = 4;
+    bool use_plonky2 = 5 [deprecated = true];
+    brevis.VmAppCircuitInfo vm_app_circuit_info = 6;
+}
+
+message SendBatchQueriesAsyncResponse {
+    ErrMsg err = 1;
+    string batch_id = 2;
+    repeated string request_ids = 3;
+    uint64 nonce = 4;
+}
+
+enum QueryOption {
+    ZK_MODE = 0;
+    OP_MODE = 1;
+}
+
+message ErrMsg {
+    ErrCode code = 1;
+    string msg = 2;
+}
+
+enum ErrCode {
+    ERROR_CODE_UNDEFINED = 0;
+    ERROR_CODE_SLOT_VALUE_PROOF_GENERATION_FAILED = 1;
+    ERROR_CODE_TRANSACTION_PROOF_GENERATION_FAILED = 2;
+}
+
+message CircuitDigestRequest{}
+
+message CircuitDigestResponse{
+    ErrMsg err = 1;
+    repeated uint64 hashes_limbs = 2;
+    repeated string gnark_vks = 3;
+}

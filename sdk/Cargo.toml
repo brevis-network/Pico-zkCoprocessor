@@ -1,0 +1,14 @@
+[package]
+name = "coprocessor-sdk"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alloy-sol-types = { workspace = true }
+hex.workspace = true
+p3-baby-bear.workspace = true
+p3-field.workspace = true
+serde.workspace = true
+serde_json = {workspace = true, default-features = false, features = ["alloc"]}
+crypto-bigint = { workspace = true }
+anyhow.workspace = true

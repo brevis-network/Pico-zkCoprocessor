@@ -1,0 +1,20 @@
+[workspace]
+members = ["sdk", "trading-volume/*", "network"]
+resolver = "2"
+
+[workspace.dependencies]
+alloy-sol-types = "0.7.7"
+hex = "0.4"
+serde = { version = "1.0", features = ["derive", "rc", "alloc"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+p3-baby-bear = { version = "0.2.0" }
+p3-field = { version = "0.2.0" }
+crypto-bigint = { git = "https://github.com/brevis-network/crypto-bigint", branch = "patch-v1.0.0", features = [
+    "serde",
+    "alloc",
+] }
+anyhow = "1.0.95"
+coprocessor-sdk = { git = "https://github.com/brevis-network/Pico-zkCoprocessor" }
+pico-sdk = { git = "https://github.com/brevis-network/pico", features = [
+    "coprocessor",
+] }
